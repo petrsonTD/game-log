@@ -1,0 +1,11 @@
+{
+    "sqltools.useNodeRuntime": true,
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "${workspaceFolder:game-log-full}/backend/game-log.db",
+            "name": "game-log-connection"
+        }
+    ]
+}
