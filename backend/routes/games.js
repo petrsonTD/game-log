@@ -15,7 +15,7 @@ gameRoutes.get("/:id", getGame);
 gameRoutes.post("/", jsonParser, createGame);
 
 // PATCH a game
-gameRoutes.patch("/:id", jsonParser, updateGame);
+gameRoutes.patch("/", jsonParser, updateGame);
 
 // DELETE a game
 gameRoutes.delete("/:id", deleteGame);

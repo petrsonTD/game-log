@@ -1,4 +1,5 @@
 import Database from "better-sqlite3";
+import { nanoid } from "nanoid";
 
 const db = new Database("game-log.db");
 
@@ -11,11 +12,11 @@ export const getGames = (req, res) => {
         return res.status(204);
     }
     
-    res.status(200).json(games);
+    res.status(200).json({games: games});
 };
 
 // get a single game
-export const getGame = (req, res) => {
+export const getGame = async (req, res) => {
     const { id } = req.params;
 
     const getQuery = db.prepare("SELECT * FROM games where id = ?");
@@ -25,29 +26,43 @@ export const getGame = (req, res) => {
         return res.status(400).json({ error: "No such game" });
     }
 
-    res.status(200).json(game);
+    res.status(200).json({game: game});
 };
 
 // create a new game
 export const createGame = (req, res) => {
-    const { gameTitle } = req.body;
+    const {
+        title,
+        description,
+        coverImg,
+        releaseYear,
+        genreId
+    } = req.body;
+    const newId = nanoid();
 
-    if (!gameTitle) {
-        res.status(400).json({ error: "Missing title!" });
+    if (!title) {
+        res.status(400).json({ error: "Missing data!" });
     }
 
     const checkQuery = db.prepare("SELECT * FROM games where title = ?");
-    const checkGame = checkQuery.get(gameTitle);
+    const checkGame = checkQuery.get(title);
 
     if (checkGame) {
         return res.status(400).json({ error: "Game with this title already exists." });
     }
 
     try {
-        const createQuery = db.prepare("INSERT INTO games (title) VALUES (?)");
-        const game = createQuery.run(gameTitle);
+        const createQuery = db.prepare("INSERT INTO games (id, title, description, coverImg, releaseYear, genreId) VALUES (?, ?, ?, ?, ?, ?)");
+        createQuery.run(
+            newId,
+            title,
+            description,
+            coverImg,
+            releaseYear,
+            genreId
+        );
         
-        res.status(201).json(game);
+        res.status(201).json({ id: newId });
     } catch (error) {
         res.status(500).json({ error: "Error, please try later." });
     }
@@ -55,8 +70,14 @@ export const createGame = (req, res) => {
 
 // update a game
 export const updateGame = (req, res) => {
-    const { id } = req.params;
-    const { newTitle } = req.body;
+    const {
+        id,
+        title,
+        description,
+        coverImg,
+        releaseYear,
+        genreId
+    } = req.body;
 
     const checkQuery = db.prepare("SELECT * FROM games where id = ?");
     const checkGame = checkQuery.get(id);
@@ -65,13 +86,17 @@ export const updateGame = (req, res) => {
         return res.status(400).json({ error: "No such game" });
     }
 
-    const updateQuery = db.prepare("UPDATE games SET title = @title WHERE id = @id;");
-    const updateGame = updateQuery.run({
-        id: id,
-        title: newTitle
+    const updateQuery = db.prepare("UPDATE games SET title = @title, description = @description, coverImg = @coverImg, releaseYear = @releaseYear, genreId = @genreId WHERE id = @id;");
+    updateQuery.run({
+        id,
+        title,
+        description,
+        coverImg,
+        releaseYear,
+        genreId
     })
 
-    res.status(200).json(updateGame);
+    res.status(200).json({ id: id });
 };
 
 // delete a game

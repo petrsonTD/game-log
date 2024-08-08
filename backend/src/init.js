@@ -1,6 +1,7 @@
 import Database from "better-sqlite3";
 import { queryCreateRanks, queryCreateUsers, queryCreateGenres, queryCreateGames, queryCreateUserReviews } from "./initTables.js";
-import { dataRanks, dataUsers, dataGenres, dataGames } from "./initData.js";
+import { dataRanks, dataUsers, dataGenres } from "./initData.js";
+import { dataGames } from "./initData.js";
 
 const db = new Database('game-log.db');
 
@@ -28,7 +29,7 @@ console.log('Tables created successfully.');
 const insertRank = db.prepare('INSERT INTO ranks (id, name) VALUES (?, ?)');
 const insertUser = db.prepare('INSERT INTO users (id, username, password, rankId) VALUES (?, ?, ?, ?)');
 const insertGenre = db.prepare('INSERT INTO genres (id, name) VALUES (?, ?)');
-const insertGame = db.prepare('INSERT INTO games (id, title, description, genreId, releaseDate, coverImg) VALUES (?, ?, ?, ?, ?, ?)');
+const insertGame = db.prepare('INSERT INTO games (id, title, description, genreId, releaseYear, coverImg) VALUES (?, ?, ?, ?, ?, ?)');
 
 db.transaction(() => {
   dataRanks.forEach(rank => insertRank.run(
@@ -46,12 +47,12 @@ db.transaction(() => {
     genre.name
   ));
   dataGames.forEach(game => insertGame.run(
-    game.id,
-    game.title,
-    game.description,
-    game.genreId,
-    game.releaseDate,
-    game.coverImg
+      game.id,
+      game.title,
+      game.description,
+      game.genreId,
+      game.releaseYear,
+      game.coverImg
   ));
 })();
 console.log('Data inserted successfully.');

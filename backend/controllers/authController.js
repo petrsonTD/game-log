@@ -5,7 +5,7 @@ import { createJSONToken, isValidPassword } from '../utils/auth.js'
 
 const db = new Database("game-log.db");
 
-// get all games
+// login
 export const login = async (req, res) => {
   const { username, password } = req.body;
 
@@ -13,13 +13,13 @@ export const login = async (req, res) => {
   const user = getQuery.get(username);
 
   if (!user) {
-    return res.status(400).json({ error: "No such user!" });
+    return res.status(400).json({ error: "Bad username or password!" });
   }
 
   const pwIsValid = await isValidPassword(password, user.password);
 
   if (!pwIsValid) {
-    return res.status(400).json({ error: "Bad password!" });
+    return res.status(400).json({ error: "Bad username or password!" });
   }
 
   const token = createJSONToken(username);
@@ -27,7 +27,7 @@ export const login = async (req, res) => {
   res.status(200).json({ token });
 };
 
-// get a single game
+// signup
 export const signup = async (req, res) => {
   const { username, password } = req.body;
   let errors = {};

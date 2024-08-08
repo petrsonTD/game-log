@@ -25,10 +25,10 @@ export const queryCreateGenres = `
 export const queryCreateGames = `
   CREATE TABLE games (
     id TEXT PRIMARY KEY,
-    title TEXT NOT NULL UNIQUE,
+    title TEXT NOT NULL,
     description TEXT,
     genreId TEXT,
-    releaseDate NUMERIC,
+    releaseYear NUMERIC,
     coverImg TEXT,
     FOREIGN KEY (genreId) REFERENCES genres(id) ON DELETE SET NULL ON UPDATE CASCADE
   )

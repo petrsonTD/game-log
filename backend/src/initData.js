@@ -57,23 +57,23 @@ export const dataGames = [
     title: "Legend of Zelda",
     description: "The first game of The Legend of Zelda series, it is set in the fantasy land of Hyrule and centers on an elf-like boy named Link, who aims to collect the eight fragments of the Triforce of Wisdom in order to rescue Princess Zelda from Ganon.",
     genreId: "sC4cq44LMPbbKt4xY8tLk",
-    releaseDate: "1986",
-    coverImg: null
+    releaseYear: "1986",
+    coverImg: "https://images.igdb.com/igdb/image/upload/t_cover_big/co1uii.jpg"
   },
   {
     id: "Qr-JPD3Hs8Ex7IJcXeaeM",
     title: "Dark Souls",
     description: "The Dark Souls games are played in a third-person perspective, and focus on exploring interconnected environments while fighting enemies with weapons and magic. Players battle bosses to progress through the story, while interacting with non-playable characters.",
     genreId: "HWmUHUKaGlJcTyWnEs1XN",
-    releaseDate: "2011",
-    coverImg: null
+    releaseYear: "2011",
+    coverImg: "https://images.igdb.com/igdb/image/upload/t_cover_big/co1x78.jpg"
   },
   {
     id: "HkVU2pvVyoNgC4aVMjKKG",
     title: "Grand Theft Auto",
     description: "The original Grand Theft Auto is made up of a series of levels each set in one of the three cities in the game. In each level, the player has a target number of points to achieve, and five lives to attain the score.",
     genreId: "DT2P-OFiBPV5Qt15UZ41M",
-    releaseDate: "1997",
-    coverImg: null
+    releaseYear: "1997",
+    coverImg: "https://images.igdb.com/igdb/image/upload/t_cover_big/co2lb0.jpg"
   }
 ];
