@@ -22,9 +22,13 @@ export const login = async (req, res) => {
     return res.status(400).json({ error: "Bad username or password!" });
   }
 
-  const token = createJSONToken(username);
+  const token = createJSONToken(user.username, user.rank === "admin"); //TODO add to TOKEN isAdmin
 
-  res.status(200).json({ token });
+  res.status(200).json({
+    username: username,
+    isAdmin: user.rank === "admin",
+    token: token
+  });
 };
 
 // signup
@@ -55,13 +59,12 @@ export const signup = async (req, res) => {
   const newUserId = nanoid();
   const hashedPw = await bcryptjs.hash(password, 12);
 
-  const createQuery = db.prepare("INSERT INTO users (id, username, password, rankId) VALUES (?, ?, ?, ?)"); //TODO create function that will do it all
-  const newUser = createQuery.run(newUserId, username, hashedPw, userRank.id);
-  const token = createJSONToken(username);
-
-  res.status(201).json({ 
-    message: 'User created.',
-    user: newUser,
-    token: token 
+  const createQuery = db.prepare("INSERT INTO users (id, username, password, rank) VALUES (?, ?, ?, ?)"); //TODO create function that will do it all
+  const newUser = createQuery.run(newUserId, username, hashedPw, "user");
+  const token = createJSONToken(username, false);
+  res.status(201).json({
+    username: username,
+    isAdmin: false,
+    token: token
   });
 };

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import GamesList from '../components/GamesList';
 import { Link } from 'react-router-dom';
+import GamesList from '../components/GamesList';
 
 function GamesPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -26,7 +26,7 @@ function GamesPage() {
 
   return (
     <>
-      <Link to="new-game" className="px-2 py-1.5 bg-red-600 font-medium text-xs uppercase rounded shadow-md hover:bg-red-700 active:bg-red-800 transition duration-150 ease-in-out">Add new game</Link>
+      <Link to="new-game" className="px-2 py-1.5 bg-green-600 font-medium text-xs uppercase rounded shadow-md hover:bg-green-700 active:bg-green-800 transition duration-150 ease-in-out">Add new game</Link>
       <div style={{ textAlign: 'center' }}>
         {isLoading && <p>Loading...</p>}
         {error && <p>{error}</p>}

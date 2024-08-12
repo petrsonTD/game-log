@@ -1,26 +1,28 @@
-export const dataRanks = [
-  {
-    id: "iRdXPH86Kftbey6SxSrGr",
-    name: "admin"
-  },
-  {
-    id: "8DoHT76amtD-cgt4kcpOl",
-    name: "user"
-  }
-];
+// export const dataRanks = [
+//   {
+//     id: "iRdXPH86Kftbey6SxSrGr",
+//     name: "admin"
+//   },
+//   {
+//     id: "8DoHT76amtD-cgt4kcpOl",
+//     name: "user"
+//   }
+// ];
 
 export const dataUsers = [
   {
     id: "gyI9yLoCqORuaTNKQGbOB",
     username: "admin",
-    password: "$2a$12$0a2Z10nj02vYn52Pn9WOt./m52JRfU/e58r9EaCUHvrIzue0PdRx.",
-    rankId: "iRdXPH86Kftbey6SxSrGr",
+    password: "$2a$12$.DITuqJ5CIjnUhhQ0y0xYOlGIaxmYy32Vjoh8MUGgkYq5pxd.WzbW", //Heslo0
+    rank: "admin",
+    // rankId: "iRdXPH86Kftbey6SxSrGr",
   },
   {
     id: "T8GR9k-4z4ii0kQYRLWK8",
     username: "user1",
-    password: "$2a$12$iZQq5ZN9fuNVm31mwd3LQOgCLRMKjdXgKV4oZVGlxLpPt7tIm3ORS",
-    rankId: "8DoHT76amtD-cgt4kcpOl",
+    password: "$2a$12$a74M6nj0tCIiEQYzEIptJ.r6ByimUL815uTRdOV6lgEq1X3GZuWXq", //Heslo1
+    rank: "user",
+    // rankId: "8DoHT76amtD-cgt4kcpOl",
   }
 ];
 

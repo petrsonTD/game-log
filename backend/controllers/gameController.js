@@ -31,6 +31,10 @@ export const getGame = async (req, res) => {
 
 // create a new game
 export const createGame = (req, res) => {
+    if (!req.token.isAdmin) {
+        return res.status(401).json({ error: "User can't add games." });
+    }
+
     const {
         title,
         description,
@@ -38,10 +42,36 @@ export const createGame = (req, res) => {
         releaseYear,
         genreId
     } = req.body;
+
     const newId = nanoid();
 
+    let errors = {};
+
     if (!title) {
-        res.status(400).json({ error: "Missing data!" });
+        errors.title = "Invalid title."
+    }
+
+    if (!description) {
+        errors.description = "Invalid description."
+    }
+
+    if (!coverImg) {
+        errors.coverImg = "Invalid coverImg."
+    }
+
+    if (!releaseYear) {
+        errors.releaseYear = "Invalid releaseYear."
+    }
+
+    if (!genreId) {
+        errors.genreId = "Invalid genreId."
+    }
+
+    if (Object.keys(errors).length > 0) {
+        return res.status(422).json({
+            message: "Adding the game failed due to validation errors.",
+            errors
+        })
     }
 
     const checkQuery = db.prepare("SELECT * FROM games where title = ?");
@@ -70,6 +100,10 @@ export const createGame = (req, res) => {
 
 // update a game
 export const updateGame = (req, res) => {
+    if (!req.token.isAdmin) {
+        return res.status(401).json({ error: "User can't edit games." });
+    }
+
     const {
         id,
         title,
@@ -86,6 +120,8 @@ export const updateGame = (req, res) => {
         return res.status(400).json({ error: "No such game" });
     }
 
+    //TODO add check for same duplicited name
+
     const updateQuery = db.prepare("UPDATE games SET title = @title, description = @description, coverImg = @coverImg, releaseYear = @releaseYear, genreId = @genreId WHERE id = @id;");
     updateQuery.run({
         id,
@@ -101,6 +137,10 @@ export const updateGame = (req, res) => {
 
 // delete a game
 export const deleteGame = (req, res) => {
+    if (!req.token.isAdmin) {
+        return res.status(401).json({ error: "User can't delete games." });
+    }
+
     const { id } = req.params;
 
     const checkQuery = db.prepare("SELECT * FROM games where id = ?");

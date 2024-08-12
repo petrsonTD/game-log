@@ -1,13 +1,13 @@
 import Database from "better-sqlite3";
-import { queryCreateRanks, queryCreateUsers, queryCreateGenres, queryCreateGames, queryCreateUserReviews } from "./initTables.js";
-import { dataRanks, dataUsers, dataGenres } from "./initData.js";
+import { queryCreateUsers, queryCreateGenres, queryCreateGames, queryCreateUserReviews } from "./initTables.js";
+import { dataUsers, dataGenres } from "./initData.js";
 import { dataGames } from "./initData.js";
 
 const db = new Database('game-log.db');
 
 // dopping tables in database
+// DROP TABLE IF EXISTS ranks;
 db.exec(`
-  DROP TABLE IF EXISTS ranks;
   DROP TABLE IF EXISTS users;
   DROP TABLE IF EXISTS genres;
   DROP TABLE IF EXISTS games;
@@ -17,7 +17,7 @@ console.log('Tables deleted successfully.');
 
 // creating tables in database
 db.transaction(() => {
-  db.prepare(queryCreateRanks).run();
+  // db.prepare(queryCreateRanks).run();
   db.prepare(queryCreateUsers).run();
   db.prepare(queryCreateGenres).run();
   db.prepare(queryCreateGames).run();
@@ -26,21 +26,22 @@ db.transaction(() => {
 console.log('Tables created successfully.');
 
 // inserting data to database
-const insertRank = db.prepare('INSERT INTO ranks (id, name) VALUES (?, ?)');
-const insertUser = db.prepare('INSERT INTO users (id, username, password, rankId) VALUES (?, ?, ?, ?)');
+// const insertRank = db.prepare('INSERT INTO ranks (id, name) VALUES (?, ?)');
+const insertUser = db.prepare('INSERT INTO users (id, username, password, rank) VALUES (?, ?, ?, ?)');
 const insertGenre = db.prepare('INSERT INTO genres (id, name) VALUES (?, ?)');
 const insertGame = db.prepare('INSERT INTO games (id, title, description, genreId, releaseYear, coverImg) VALUES (?, ?, ?, ?, ?, ?)');
 
 db.transaction(() => {
-  dataRanks.forEach(rank => insertRank.run(
-    rank.id,
-    rank.name
-  ));
+  // dataRanks.forEach(rank => insertRank.run(
+  //   rank.id,
+  //   rank.name
+  // ));
   dataUsers.forEach(user => insertUser.run(
     user.id,
     user.username,
     user.password,
-    user.rankId
+    user.rank
+    // user.rankId
   ));
   dataGenres.forEach(genre => insertGenre.run(
     genre.id,

@@ -1,17 +1,16 @@
-export const queryCreateRanks = `
-  CREATE TABLE ranks (
-    id TEXT PRIMARY KEY,
-    name TEXT NOT NULL
-  )
-`;
+// export const queryCreateRanks = `
+//   CREATE TABLE ranks (
+//     id TEXT PRIMARY KEY,
+//     name TEXT NOT NULL
+//   )
+// `;
 
 export const queryCreateUsers = `
   CREATE TABLE users (
     id TEXT PRIMARY KEY,
     username TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL,
-    rankId TEXT,
-    FOREIGN KEY (rankId) REFERENCES ranks(id) ON DELETE SET NULL ON UPDATE CASCADE
+    rank TEXT
   )
 `;
 

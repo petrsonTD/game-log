@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import GameForm from "../components/GameForm";
 import { useParams } from "react-router-dom";
+import GameForm from "../components/GameForm";
 
 function EditGamePage() {
   const [isLoadingGame, setIsLoadingGame] = useState(false);
@@ -53,7 +53,7 @@ function EditGamePage() {
         {isLoading && <p>Loading...</p>}
         {error && <p>{error}</p>}
       </div>
-      {!isLoading && fetchedGame && fetchedGenres && <GameForm game={fetchedGame} genres={fetchedGenres} />}
+      {!isLoading && fetchedGame && fetchedGenres && <GameForm game={fetchedGame} genres={fetchedGenres} method="PATCH" />}
     </>
   )
 }

@@ -29,7 +29,7 @@ function NewGamePage() {
         {isLoading && <p>Loading...</p>}
         {error && <p>{error}</p>}
       </div>
-      {!isLoading && fetchedGenres && <GameForm game={null} genres={fetchedGenres} />}
+      {!isLoading && fetchedGenres && <GameForm game={null} genres={fetchedGenres} method="POST" />}
     </>
   )
 }

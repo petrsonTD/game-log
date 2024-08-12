@@ -8,7 +8,7 @@ const app = express();
 const port = 4000; // Changed port to avoid conflict with React dev server
 
 app.use(cors());
-app.use("/api/login", authRoutes);
+app.use("/api/auth", authRoutes);
 app.use("/api/games", gameRoutes);
 app.use("/api/genres", genreRoutes);
 

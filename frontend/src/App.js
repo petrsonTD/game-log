@@ -4,7 +4,7 @@ import GamesPage from "./pages/Games";
 import GameDetailPage from "./pages/GameDetail";
 import NewGamePage from "./pages/NewGame";
 import RootLayout from "./pages/Root";
-import LoginPage from "./pages/Login";
+import AuthenticationPage from "./pages/Authhentication";
 import EditGamePage from "./pages/EditGame";
 
 const router = createBrowserRouter([
@@ -13,7 +13,7 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     children: [
       { path: "", element: <HomePage /> },
-      { path: "login", element: <LoginPage /> },
+      { path: "auth", element: <AuthenticationPage /> },
       {
         path: "games",
         children: [

@@ -1,17 +1,21 @@
+import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { UserContext } from "../UserContextProvider";
 
-function GameForm({ game, genres }) {
+function GameForm({ game, genres, method }) {
+  const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
-  async function myFunction(formData) {
+  async function onSubmit(formData) {
     formData.preventDefault();
     const data = new FormData(formData.target);
     const formDataObj = Object.fromEntries(data.entries());
 
     const response = await fetch("/api/games", {
-      method: game ? "PATCH" : "POST", //TODO change it so it would get check it with url location
+      method: method,
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + user.token
       },
       body: JSON.stringify(formDataObj)
     })
@@ -25,8 +29,8 @@ function GameForm({ game, genres }) {
   }
 
   return(
-    <form method="post" onSubmit={myFunction} className="space-y-6 bg-slate-800 p-6 rounded-lg shadow-lg border border-slate-700 max-w-md mx-auto text-slate-200 mt-10">
-      {game && <input name="id" hidden value={game.id} />}
+    <form method={method} onSubmit={onSubmit} className="space-y-6 bg-slate-800 p-6 rounded-lg shadow-lg border border-slate-700 max-w-md mx-auto text-slate-200 mt-10">
+      {method === "PATCH" && <input name="id" hidden readOnly value={game.id} />}
       <div>
         <label htmlFor="title" className="block text-base font-semibold text-slate-200">Title</label>
         <input
