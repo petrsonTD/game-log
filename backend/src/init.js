@@ -1,61 +1,59 @@
 import Database from "better-sqlite3";
-import { queryCreateUsers, queryCreateGenres, queryCreateGames, queryCreateUserReviews } from "./initTables.js";
-import { dataUsers, dataGenres } from "./initData.js";
-import { dataGames } from "./initData.js";
+import { queryCreateUsers, queryCreateGenres, queryCreateGames, queryCreateStatus, queryCreateListGames } from "./initTables.js";
+import { dataUsers, dataGenres, dataGames, dataStatus } from "./initData.js";
 
-const db = new Database('game-log.db');
+const db = new Database("game-log.db");
 
 // dopping tables in database
-// DROP TABLE IF EXISTS ranks;
 db.exec(`
-  DROP TABLE IF EXISTS users;
-  DROP TABLE IF EXISTS genres;
-  DROP TABLE IF EXISTS games;
-  DROP TABLE IF EXISTS reviews;
+    DROP TABLE IF EXISTS listGames;
+    DROP TABLE IF EXISTS users;
+    DROP TABLE IF EXISTS genres;
+    DROP TABLE IF EXISTS games;
+    DROP TABLE IF EXISTS status;
 `);
-console.log('Tables deleted successfully.');
+console.log("Tables deleted successfully.");
 
 // creating tables in database
 db.transaction(() => {
-  // db.prepare(queryCreateRanks).run();
-  db.prepare(queryCreateUsers).run();
-  db.prepare(queryCreateGenres).run();
-  db.prepare(queryCreateGames).run();
-  db.prepare(queryCreateUserReviews).run();
+    db.prepare(queryCreateUsers).run();
+    db.prepare(queryCreateGenres).run();
+    db.prepare(queryCreateGames).run();
+    db.prepare(queryCreateStatus).run();
+    db.prepare(queryCreateListGames).run();
 })();
-console.log('Tables created successfully.');
+console.log("Tables created successfully.");
 
 // inserting data to database
-// const insertRank = db.prepare('INSERT INTO ranks (id, name) VALUES (?, ?)');
-const insertUser = db.prepare('INSERT INTO users (id, username, password, rank) VALUES (?, ?, ?, ?)');
-const insertGenre = db.prepare('INSERT INTO genres (id, name) VALUES (?, ?)');
-const insertGame = db.prepare('INSERT INTO games (id, title, description, genreId, releaseYear, coverImg) VALUES (?, ?, ?, ?, ?, ?)');
+const insertUser = db.prepare("INSERT INTO users (id, username, password, rank) VALUES (?, ?, ?, ?)");
+const insertGenre = db.prepare("INSERT INTO genres (id, name) VALUES (?, ?)");
+const insertGame = db.prepare("INSERT INTO games (id, title, description, genreId, releaseYear, coverImg) VALUES (?, ?, ?, ?, ?, ?)");
+const insertStatus = db.prepare("INSERT INTO status (id, name) VALUES (?, ?)");
 
 db.transaction(() => {
-  // dataRanks.forEach(rank => insertRank.run(
-  //   rank.id,
-  //   rank.name
-  // ));
-  dataUsers.forEach(user => insertUser.run(
-    user.id,
-    user.username,
-    user.password,
-    user.rank
-    // user.rankId
-  ));
-  dataGenres.forEach(genre => insertGenre.run(
-    genre.id,
-    genre.name
-  ));
-  dataGames.forEach(game => insertGame.run(
-      game.id,
-      game.title,
-      game.description,
-      game.genreId,
-      game.releaseYear,
-      game.coverImg
-  ));
+    dataUsers.forEach(user => insertUser.run(
+        user.id,
+        user.username,
+        user.password,
+        user.rank
+    ));
+    dataGenres.forEach(genre => insertGenre.run(
+        genre.id,
+        genre.name
+    ));
+    dataGames.forEach(game => insertGame.run(
+        game.id,
+        game.title,
+        game.description,
+        game.genreId,
+        game.releaseYear,
+        game.coverImg
+    ));
+    dataStatus.forEach(status => insertStatus.run(
+        status.id,
+        status.name
+    ));
 })();
-console.log('Data inserted successfully.');
+console.log("Data inserted successfully.");
 
 db.close();

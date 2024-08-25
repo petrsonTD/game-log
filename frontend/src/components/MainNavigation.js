@@ -5,9 +5,8 @@ import { useContext } from "react";
 
 function MainNavigation() {
   const { user, removeUser } = useContext(UserContext);
-  
+
   const location = useLocation();
-  // const token = getAuthToken(); //TODO change for CONTEXT
 
   function logout() {
     removeUser();
@@ -15,7 +14,7 @@ function MainNavigation() {
   }
 
   return (
-    <div className="py-5 flex text-xl font-bold justify-between">
+    <div className="py-5 text-xl font-bold justify-between hidden sm:flex">
       <div>
         {location.pathname !== "/" && (<Link to="/" className="">
           <span className="text-slate-50 font-bold underline">game</span>
@@ -26,10 +25,11 @@ function MainNavigation() {
         {user && <button className="mr-3" onClick={logout}>Log out</button>}
         {!user && <Link to="/auth?mode=login" className="mr-3">Log in</Link>}
         <Link to="/games" className="mr-3">Games</Link>
+        {user && <Link to="/list" className="mr-3">My list</Link>}
         <Autocomplete />
       </div>
     </div>
-  )
+  );
 }
 
 export default MainNavigation;

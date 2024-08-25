@@ -1,10 +1,3 @@
-// export const queryCreateRanks = `
-//   CREATE TABLE ranks (
-//     id TEXT PRIMARY KEY,
-//     name TEXT NOT NULL
-//   )
-// `;
-
 export const queryCreateUsers = `
   CREATE TABLE users (
     id TEXT PRIMARY KEY,
@@ -33,16 +26,22 @@ export const queryCreateGames = `
   )
 `;
 
-//TODO add table for platforms like PS3, PS4, Xbox, Switch etc...
-//TODO add connnecting table for games and plarforms.
-
-export const queryCreateUserReviews = `
-  CREATE TABLE reviews (
+export const queryCreateStatus = `
+  CREATE TABLE status (
     id TEXT PRIMARY KEY,
-    gameId TEXT,
-    userId TEXT,
-    score NUMERIC,
+    name TEXT NOT NULL
+  )
+`;
+
+
+export const queryCreateListGames = `
+  CREATE TABLE listGames (
+    id TEXT PRIMARY KEY,
+    userId TEXT NOT NULL,
+    gameId TEXT NOT NULL,
+    statusId TEXT,
+    FOREIGN KEY (userId) REFERENCES users(id) ON DELETE SET NULL ON UPDATE CASCADE,
     FOREIGN KEY (gameId) REFERENCES games(id) ON DELETE SET NULL ON UPDATE CASCADE,
-    FOREIGN KEY (userId) REFERENCES users(id) ON DELETE SET NULL ON UPDATE CASCADE
+    FOREIGN KEY (statusId) REFERENCES status(id) ON DELETE SET NULL ON UPDATE CASCADE
   )
 `;

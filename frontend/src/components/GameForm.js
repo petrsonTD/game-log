@@ -18,7 +18,7 @@ function GameForm({ game, genres, method }) {
         "Authorization": "Bearer " + user.token
       },
       body: JSON.stringify(formDataObj)
-    })
+    });
 
     if (response.ok) {
       const data = await response.json();
@@ -28,7 +28,7 @@ function GameForm({ game, genres, method }) {
     }
   }
 
-  return(
+  return (
     <form method={method} onSubmit={onSubmit} className="space-y-6 bg-slate-800 p-6 rounded-lg shadow-lg border border-slate-700 max-w-md mx-auto text-slate-200 mt-10">
       {method === "PATCH" && <input name="id" hidden readOnly value={game.id} />}
       <div>
@@ -106,7 +106,7 @@ function GameForm({ game, genres, method }) {
         </Link>
       </div>
     </form>
-  )
+  );
 }
 
 export default GameForm;

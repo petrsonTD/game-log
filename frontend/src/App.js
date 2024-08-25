@@ -6,6 +6,7 @@ import NewGamePage from "./pages/NewGame";
 import RootLayout from "./pages/Root";
 import AuthenticationPage from "./pages/Authhentication";
 import EditGamePage from "./pages/EditGame";
+import ListPage from "./pages/List";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,14 @@ const router = createBrowserRouter([
           { path: ":gameId", element: <GameDetailPage /> },
           { path: ":gameId/edit", element: <EditGamePage /> },
           { path: "new-game", element: <NewGamePage /> }
+        ]
+      },
+      {
+        path: "list",
+        children: [
+          { path: "", element: <ListPage /> },
+          { path: ":gameId", element: <GameDetailPage /> },
+          { path: ":gameId/edit", element: <EditGamePage /> }
         ]
       }
     ]

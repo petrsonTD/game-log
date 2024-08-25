@@ -1,38 +1,31 @@
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import { useParams } from "react-router-dom";
+import { UserContext } from "../UserContextProvider";
 import GameDetail from "../components/GameDetail";
+import { useFetch } from "../hooks/useFetch";
 
 function GameDetailPage() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [fetchedGame, setFetchedGame] = useState(null);
-  const [error, setError] = useState();
-
+  const { user } = useContext(UserContext);
   const { gameId } = useParams();
 
-  useEffect(() => {
-    async function fetchGames() {
-      setIsLoading(true);
-      const response = await fetch(`/api/games/${gameId}`);
+  const {
+    isLoading: isLoadingGame,
+    data: fetchedGame,
+    error: errorGame,
+    refetch: refetchGame
+  } = useFetch(user ? `/api/games/${gameId}/user` : `/api/games/${gameId}`);
 
-      if (!response.ok) {
-        setError('Fetching games failed.');
-      } else {
-        const resData = await response.json();
-        setFetchedGame(resData.game);
-      }
-      setIsLoading(false);
-    }
-
-    fetchGames();
-  }, []);
+  const {
+    data: fetchedStatus
+  } = useFetch("/api/status");
 
   return (
     <>
-      <div style={{ textAlign: 'center' }}>
-        {isLoading && <p>Loading...</p>}
-        {error && <p>{error}</p>}
+      <div style={{ textAlign: "center" }}>
+        {isLoadingGame && <p>Loading...</p>}
+        {errorGame && <p>{errorGame}</p>}
       </div>
-      {!isLoading && fetchedGame && <GameDetail game={fetchedGame} />}
+      {!isLoadingGame && fetchedGame && <GameDetail game={fetchedGame} status={fetchedStatus?.status} refetchGame={refetchGame} />}
     </>
   );
 }

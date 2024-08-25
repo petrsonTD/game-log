@@ -8,7 +8,7 @@ function AuthForm() {
 
   const [searchParams] = useSearchParams();
   const isLogin = searchParams.get("mode") === "login";
-  
+
   const [error, setError] = useState();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -29,11 +29,11 @@ function AuthForm() {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(formDataObj)
-    })
-    
+    });
+
     if (response.status === 422 || response.status === 401) {
       setError(await response.json());
-      return
+      return;
     }
 
     const resData = await response.json();
@@ -54,8 +54,8 @@ function AuthForm() {
 
 
   return (
-    <>
-      <form method="post" onSubmit={onSubmit} className="space-y-6 bg-slate-800 p-6 rounded-lg shadow-lg border border-slate-700 max-w-md mx-auto text-slate-200 mt-10">
+    <div className="pt-10">
+      <form method="post" onSubmit={onSubmit} className="space-y-6 bg-slate-800 p-6 rounded-lg shadow-lg border border-slate-700 max-w-md mx-auto text-slate-200">
         <h3 className="font-medium text-3xl mb-5">{isLogin ? "Log in" : "Create a new user"}</h3>
         {error && (
           <ul>
@@ -102,8 +102,8 @@ function AuthForm() {
           </Link>
         </div>
       </form>
-    </>
-  )
+    </div>
+  );
 }
 
 export default AuthForm;
